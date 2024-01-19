@@ -1,0 +1,29 @@
+version: "2.0.0"
+entropy: 128 # 128 for 12 words, 256 for 24 words
+rpc_provider:
+  name: "ankr_api"
+  url: "https://rpc.ankr.com/"
+  api_keys: "./config/api_keys.txt" # path
+  rate_limit: 20 # requests per second (10 requests per second for 1 account sign in free plan)
+  usage_period: 1 # seconds
+  batch_size: 10
+logging: 
+  save_empty: true # save logs of empty wallets if true
+  empty: "logs/empty.log" # path
+  success: "logs/succses.log" # path
+chains:
+  - name: "ethereum"
+    chain_id: 1
+    endpoint: "eth"
+  - name: "binance"
+    chain_id: 56
+    endpoint: "bsc"
+  - name: "polygon"
+    chain_id: 137
+    endpoint: "polygon"
+  - name: "arbitrum"  
+    chain_id: 42161
+    endpoint: "arbitrum"
+  - name: "avalanche"
+    chain_id: 43114
+    endpoint: "avalanche"
