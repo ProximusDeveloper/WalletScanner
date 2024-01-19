@@ -45,16 +45,12 @@ func main() {
 			log.Error("Error: GetSecret", sl.Err(err))
 		}
 
-		// Количество кошельков на одну горутину для каждого URL
 		walletsPerRoutine := walletsPerCycle / (len(urls) * len(urls[0]))
 
-		// Разделение секретов на чанки, соответствующие количеству URL-адресов
 		secretChunks := chunkSecrets(log, secrets, len(urls)*len(urls[0]))
 
-		// Создаем WaitGroup для ожидания завершения всех горутин
 		var wg sync.WaitGroup
 
-		// Буферизованные каналы для сбора результатов
 		successCh := make(chan []core.Secret, walletsPerCycle)
 		emptyCh := make(chan []core.Secret, walletsPerCycle)
 
@@ -84,10 +80,8 @@ func main() {
 			}(secretChunk, urls[urlIndex/len(urls[0])][urlIndex%len(urls[0])])
 		}
 
-		// Ждем завершения всех горутин
 		wg.Wait()
 
-		// Закрываем каналы
 		close(successCh)
 		close(emptyCh)
 
